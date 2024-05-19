@@ -1,6 +1,5 @@
 
 sbin_PROGRAMS = init
-sysconf_DATA = startup.cfg
 
 init_SOURCES = \
   main.c
