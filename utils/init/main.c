@@ -325,17 +325,18 @@ int cmdChdir (void) {
  *
  * format: waitfor <path>
  *
- * Waits for a filesystem to be mounted at <path>
+ * Waits for a filesystem or device to be mounted at <path>
+ *
+ * TODO: Add option to timeout
  */
 int cmdWaitfor (void) {
   char *fullpath;
-  struct stat st;
-  struct stat parent_stat;
-  char path[PATH_MAX]; 
-  char *parent_path;
-  int fd = -1;
-  struct pollfd pfd;
   int sc;
+
+  struct timespec ts = {
+    .tv_sec = 0,
+    .tv_nsec = 100000000,
+  };
 
   fullpath = tokenize(NULL);
   
@@ -343,60 +344,15 @@ int cmdWaitfor (void) {
     exit(-1);
   }
 
-  strcpy (path, fullpath);
-     
-  parent_path = dirname(path);
-  
-  if (stat(parent_path, &parent_stat) != 0) {
-    exit(-1);
-  }
-  
-  fd = open (fullpath, O_RDONLY);
-  
-  if (fd < 0) {
-    exit(-1);
-  }
-
-
-#if 0
-  int kq;
-  struct kevent ev;
-  struct timespec ts;
-
-  if ((kq = kqueue()) != 0) {
-    return -1;
-  }
-
-  ts.tv_sec = 0;
-  ts.tv_nanoseconds = 200 * 1000000;
-
-  // FIXME: Use EVFILT_FS, no filehandle needed, is notified on all
-  // global mount/unmount changes.
-      
-  EV_SET(&ev, fd, EVFILT_VNODE, EV_ADD | EV_ENABLE, 0, 0, 0); 
-  kevent(kq, &ev, 1,  NULL, 0, NULL);
-
-  while(1) {
-    if (stat(fullpath, &st) == 0 && st.st_dev != parent_stat.st_dev) {
+    
+  while (1) {
+    if (ismount(fullpath) == 1) {
       break;
     }
 
-    kevent(kq, NULL, 0, &ev, 1, &ts);
+    nanosleep(&ts, NULL);
   }
-  
-  close(kq);
-  
-#else
-  while (1) {
-    if (stat(fullpath, &st) == 0 && st.st_dev != parent_stat.st_dev) {
-      break;
-    }    
 
-    sleep(1);
-  }
-#endif
-
-  close(fd);  
   return 0;  
 }
 
