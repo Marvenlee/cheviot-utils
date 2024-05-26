@@ -1,3 +1,5 @@
+#define LOG_LEVEL_WARN
+
 #include <dirent.h>
 #include <fcntl.h>
 #include <stdio.h>
@@ -53,29 +55,20 @@ int main(int argc, char **argv)
   int pid;
   int startup_cfg_fd;
 
-  log_info("**** /sbin/init started ****");
-
   dummy_env[0] = NULL;
   environ = dummy_env;
-  
-  log_info("opening etc/startup.cfg");
-  
+    
   if ((startup_cfg_fd = open("/etc/startup.cfg", O_RDWR)) < 0) {
     log_error("failed to open etc/startup.cfg");
     return -1;
   }
 
-  log_info("opened etc/startup.cfg");
-  
   if ((sc = fstat(startup_cfg_fd, &st)) != 0) {
     close(startup_cfg_fd);
     return -1;
   }
   
-  log_info("statted etc/startup.cfg");
-  log_info("startup.cfg size = %d", st.st_size);
-
-	log_info("sizeof stat st: %d", sizeof (struct stat));
+	log_debug("sizeof stat st: %d", sizeof (struct stat));
     
   buf = malloc (st.st_size + 1);
   
