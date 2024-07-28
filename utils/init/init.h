@@ -24,7 +24,7 @@
 extern char **environ;
 
 // Prototypes
-int cmdStart (void);
+int cmdStart (bool session);
 int cmdChdir (void);
 int cmdMknod (void);
 int cmdWaitfor (void);

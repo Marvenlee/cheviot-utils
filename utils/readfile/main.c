@@ -17,23 +17,15 @@
 
 
 
-/* @brief   Main function of system init process
+/* @brief   Ad-hoc test of file access
  *
  * @param   argc, unused
  * @param   argv, unused
  * @return  0 on success, non-zero on failure
  *
- * This process is embedded on the initial file system (IFS) along with the
- * kernel and a few other tools. It's purpose is to start any additional
- * servers and device drivers during the inital phase of system startup.
- * 
- * Once other servers that handle the on-disk root filesystem are initialized
- * then this performs a pivot-root, where the root "/" path is pivotted
- * from pointing to the IFS image's root to that of on-disk root filesystem.
+ * Modify as necessary to test functionality of file access.
  *
- * The IFS executable is the first process started by the kernel. The IFS forks
- * so that the child process becomes the IFS handler server and the parent/root
- * process performs an exec of "/sbin/init" to become this process.
+ * TODO:  Create more comprehensive test suite.
  */
 int main(int argc, char **argv)
 {
@@ -88,11 +80,10 @@ int main(int argc, char **argv)
 #else
 	uint32_t *buffer_original, *buffer_out, *buffer_readback;
 	
-	buffer_original = virtualalloc(0x40000000, 1024 * 32, PROT_READ | PROT_WRITE);
-	buffer_out = virtualalloc(0x40000000, 1024 * 32, PROT_READ | PROT_WRITE);
-	buffer_readback = virtualalloc(0x40000000, 1024 * 32, PROT_READ | PROT_WRITE);
+	buffer_original = virtualalloc((void *)0x40000000, 1024 * 32, PROT_READ | PROT_WRITE);
+	buffer_out = virtualalloc((void *)0x40000000, 1024 * 32, PROT_READ | PROT_WRITE);
+	buffer_readback = virtualalloc((void *)0x40000000, 1024 * 32, PROT_READ | PROT_WRITE);
 
-	
 	if (buffer_original == NULL || buffer_out == NULL || buffer_readback == NULL) {
 		printf("Failed to allocate buffer\n");
 		close(fd);
@@ -147,10 +138,6 @@ int main(int argc, char **argv)
 	}
 
 #endif
-
-
-
-
 
 	printf("\n---- done ----\n");
 

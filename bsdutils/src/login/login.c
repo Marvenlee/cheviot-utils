@@ -61,7 +61,7 @@ __RCSID("$NetBSD: login.c,v 1.105 2014/11/12 22:23:38 aymeric Exp $");
 #include <sys/resource.h>
 #include <sys/file.h>
 #include <sys/wait.h>
-//#include <sys/socket.h>
+// FIXME: #include <sys/socket.h>
 
 #include <err.h>
 #include <errno.h>
@@ -72,12 +72,12 @@ __RCSID("$NetBSD: login.c,v 1.105 2014/11/12 22:23:38 aymeric Exp $");
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-//#include <syslog.h>
+// FIXME: #include <syslog.h>
 #include <time.h>
-//#include <ttyent.h>
-//#include <tzfile.h>
+#include <ttyent.h>
+#include <tzfile.h>
 #include <unistd.h>
-//#include <sysexits.h>
+#include <sysexits.h>
 #ifdef SUPPORT_UTMP
 #include <utmp.h>
 #endif

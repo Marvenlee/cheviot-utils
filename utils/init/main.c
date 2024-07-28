@@ -16,6 +16,8 @@
 #include <sys/syslimits.h>
 #include <sys/wait.h>
 #include <sys/mount.h>
+#include <sys/termios.h>
+#include <sys/ioctl.h>
 #include "init.h"
 
 // Globals
@@ -97,7 +99,9 @@ int main(int argc, char **argv)
     if (strncmp("#", cmd, 1) == 0) {
       // Comment
     } else if (strncmp("start", cmd, 5) == 0) {
-      cmdStart();
+      cmdStart(false);
+    } else if (strncmp("session", cmd, 5) == 0) {
+      cmdStart(true);
     } else if (strncmp("waitfor", cmd, 7) == 0) {
       cmdWaitfor();
     } else if (strncmp("chdir", cmd, 5) == 0) {
@@ -214,7 +218,7 @@ char *tokenize(char *line)
  *
  * format: start <exe_name> [optional args ...]
  */
-int cmdStart (void) {
+int cmdStart (bool session) {
   char *tok;
   int pid;
 
@@ -234,7 +238,14 @@ int cmdStart (void) {
     
   pid = fork();
   
-  if (pid == 0) {  
+  if (pid == 0) {
+  
+    if (session == true) {
+      ioctl(STDIN_FILENO, TIOCSCTTY, 0);
+      setsid();
+      setpgrp();
+    }
+    
     execve((const char *)argv[0], argv, NULL);
     exit(-2);
   }
@@ -456,6 +467,7 @@ int cmdSettty (void) {
   dup2(fd, STDERR_FILENO);
   
   setbuf(stdout, NULL);
+    
   tty_set = true;
   return 0;
 }
@@ -489,7 +501,7 @@ int cmdSetEnv(void)
  */
 void cmdPrintGreeting(void)
 {
-#if 1
+#if 0
 //  printf("\033[0;0H\033[0J\r\n\n");
 
   printf("  \033[34;1m   .oooooo.   oooo                               o8o                .   \033[37;1m      .oooooo.    .ooooooo.  \n");
