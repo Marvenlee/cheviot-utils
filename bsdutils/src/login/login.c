@@ -72,7 +72,7 @@ __RCSID("$NetBSD: login.c,v 1.105 2014/11/12 22:23:38 aymeric Exp $");
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-// FIXME: #include <syslog.h>
+#include <syslog.h>
 #include <time.h>
 #include <ttyent.h>
 #include <tzfile.h>
@@ -196,7 +196,7 @@ main(int argc, char *argv[])
 	 * -s is used to force use of S/Key or equivalent.
 	 */
 	if (gethostname(localhost, sizeof(localhost)) < 0) {
-//		syslog(LOG_ERR, "couldn't get local hostname: %m");
+		syslog(LOG_ERR, "couldn't get local hostname");
 		strcpy(hostname, "amnesiac");
 	}
 #ifdef notdef
@@ -285,7 +285,7 @@ main(int argc, char *argv[])
 	if (issetugid()) {
 		nested = strdup(user_from_uid(getuid(), 0));
 		if (nested == NULL) {
-//			syslog(LOG_ERR, "strdup: %m");
+			syslog(LOG_ERR, "strdup");
 			sleepexit(EXIT_FAILURE);
 		}
 	}
@@ -314,9 +314,9 @@ main(int argc, char *argv[])
 		 * login succeeds.
 		 */
 		if (kerror != ENXIO) {	/* XXX NetBSD-local Heimdal hack */
-//			syslog(LOG_NOTICE,
-//			    "%s when initializing Kerberos context",
-//			    error_message(kerror));
+			syslog(LOG_NOTICE,
+			    "%s when initializing Kerberos context",
+			    error_message(kerror));
 			krb5_configured = 1;
 		}
 		login_krb5_get_tickets = 0;
@@ -445,9 +445,8 @@ main(int argc, char *argv[])
 		 * If trying to log in as root without Kerberos,
 		 * but with insecure terminal, refuse the login attempt.
 		 */
-		if (pwd && !rval && rootlogin && !rootterm(tty)) {
-			(void)printf("Login incorrect or refused on this "
-			    "terminal.\n");
+//		if (pwd && !rval && rootlogin && !rootterm(tty)) {
+//			(void)printf("Login disable on insecure terminal.\n");
 //			if (hostname)
 //				syslog(LOG_NOTICE,
 //				    "LOGIN %s REFUSED FROM %s ON TTY %s",
@@ -456,13 +455,13 @@ main(int argc, char *argv[])
 //				syslog(LOG_NOTICE,
 //				    "LOGIN %s REFUSED ON TTY %s",
 //				     pwd->pw_name, tty);
-			continue;
-		}
+//			continue;
+//		}
 
 		if (pwd && !rval)
 			break;
 
-		(void)printf("Login incorrect or refused on this "
+		(void)printf("Login incorrect or refused on this DEBUG "
 		    "terminal.\n");
 		failures++;
 		cnt++;
@@ -583,12 +582,12 @@ main(int argc, char *argv[])
 #ifdef LOGIN_CAP
 	if (nested == NULL && setusercontext(lc, pwd, pwd->pw_uid,
 	    LOGIN_SETLOGIN) != 0) {
-//		syslog(LOG_ERR, "setusercontext failed");
+		syslog(LOG_ERR, "setusercontext failed");
 		exit(EXIT_FAILURE);
 	}
 	if (setusercontext(lc, pwd, pwd->pw_uid,
 	    (LOGIN_SETALL & ~(LOGIN_SETPATH|LOGIN_SETLOGIN))) != 0) {
-//		syslog(LOG_ERR, "setusercontext failed");
+		syslog(LOG_ERR, "setusercontext failed");
 		exit(EXIT_FAILURE);
 	}
 #else
@@ -613,7 +612,7 @@ main(int argc, char *argv[])
 #ifdef LOGIN_CAP
 	if ((shell = login_getcapstr(lc, "shell", NULL, NULL)) != NULL) {
 		if ((shell = strdup(shell)) == NULL) {
-//			syslog(LOG_ERR, "Cannot alloc mem");
+			syslog(LOG_ERR, "Cannot alloc mem");
 			sleepexit(EXIT_FAILURE);
 		}
 		pwd->pw_shell = shell;
@@ -647,7 +646,7 @@ main(int argc, char *argv[])
 #endif
 
 	/* If fflag is on, assume caller/authenticator has logged root login. */
-	if (rootlogin && fflag == 0) {
+//	if (rootlogin && fflag == 0) {
 #if 0
 		if (hostname)
 			syslog(LOG_NOTICE, "ROOT LOGIN (%s) ON %s FROM %s",
@@ -656,7 +655,7 @@ main(int argc, char *argv[])
 			syslog(LOG_NOTICE, "ROOT LOGIN (%s) ON %s",
 			    username, tty);
 #endif
-	}
+//	}
 
 #if defined(KERBEROS5)
 	if (KERBEROS_CONFIGURED && !quietlog && notickets == 1)
