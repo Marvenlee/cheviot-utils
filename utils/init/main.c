@@ -501,9 +501,11 @@ int cmdSetEnv(void)
  */
 void cmdPrintGreeting(void)
 {
+  struct timespec ts = {.tv_sec = 0, .tv_nsec = 600000000};
 #if 1
-//  printf("\033[0;0H\033[0J\r\n\n");
-  printf("\n\n");
+  nanosleep(&ts, NULL);
+  
+  printf("\033[0;0H\033[0J\r\n");
   printf("  \033[34;1m   .oooooo.   oooo                               o8o                .   \033[37;1m      .oooooo.    .ooooooo.  \n");
   printf("  \033[34;1m  d8P'  `Y8b  `888                               `^'              .o8   \033[37;1m     d8P'  `Y8b  d8P'   `Y8b \n");
   printf("  \033[34;1m 888           888 .oo.    .ooooo.  oooo    ooo oooo   .ooooo.  .o888oo \033[37;1m    888      888 Y88bo.      \n");
@@ -512,8 +514,12 @@ void cmdPrintGreeting(void)
   printf("  \033[34;1m `88b    ooo   888   888  888    .o    `888'     888  888   888   888 . \033[37;1m    `88b    d88' oo     .d8P \n");
   printf("  \033[34;1m  `Y8bood8P'  o888o o888o `Y8bod8P'     `8'     o888o `Y8bod8P'   `888' \033[37;1m     `Y8bood8P'  `^888888P'  \n");
   printf("\n");
-  printf("\033[0m\n");
+  printf("\033[0m\n\n");
+
+  nanosleep(&ts, NULL);
 #endif
+
+
 }
 
 
