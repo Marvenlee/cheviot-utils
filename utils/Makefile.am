@@ -19,5 +19,5 @@ else
 endif
 endif
 
-SUBDIRS = init readfile say setgpio
+SUBDIRS = init readfile say setgpio clock top chartest
 

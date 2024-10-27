@@ -1,4 +1,4 @@
-#define LOG_LEVEL_WARN
+#define LOG_LEVEL_ERROR
 
 #include <dirent.h>
 #include <fcntl.h>
@@ -66,12 +66,11 @@ int main(int argc, char **argv)
   }
 
   if ((sc = fstat(startup_cfg_fd, &st)) != 0) {
+    log_error("fstat failed");
     close(startup_cfg_fd);
     return -1;
   }
   
-	log_debug("sizeof stat st: %d", sizeof (struct stat));
-    
   buf = malloc (st.st_size + 1);
   
   if (buf == NULL) {
@@ -84,8 +83,6 @@ int main(int argc, char **argv)
   buf[st.st_size] = '\0';
 
   close(startup_cfg_fd);  
-
-  log_info("processing startup.cfg");
 
   src = buf;   
 
@@ -501,10 +498,7 @@ int cmdSetEnv(void)
  */
 void cmdPrintGreeting(void)
 {
-  struct timespec ts = {.tv_sec = 0, .tv_nsec = 600000000};
 #if 1
-  nanosleep(&ts, NULL);
-  
   printf("\033[0;0H\033[0J\r\n");
   printf("  \033[34;1m   .oooooo.   oooo                               o8o                .   \033[37;1m      .oooooo.    .ooooooo.  \n");
   printf("  \033[34;1m  d8P'  `Y8b  `888                               `^'              .o8   \033[37;1m     d8P'  `Y8b  d8P'   `Y8b \n");
@@ -515,8 +509,6 @@ void cmdPrintGreeting(void)
   printf("  \033[34;1m  `Y8bood8P'  o888o o888o `Y8bod8P'     `8'     o888o `Y8bod8P'   `888' \033[37;1m     `Y8bood8P'  `^888888P'  \n");
   printf("\n");
   printf("\033[0m\n\n");
-
-  nanosleep(&ts, NULL);
 #endif
 
 

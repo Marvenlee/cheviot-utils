@@ -16,6 +16,9 @@ AC_CONFIG_FILES([
   readfile/Makefile
   say/Makefile
   setgpio/Makefile  
+  clock/Makefile  
+  top/Makefile
+  chartest/Makefile
   ])
   
 AC_OUTPUT
