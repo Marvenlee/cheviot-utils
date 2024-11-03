@@ -19,5 +19,4 @@ else
 endif
 endif
 
-SUBDIRS = init say setgpio top shutdown
-
+SUBDIRS = chartest clock readfile
