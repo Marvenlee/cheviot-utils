@@ -1,5 +1,7 @@
 
-sbin_PROGRAMS = readfile
+testdir = $(prefix)/opt/tests
+
+test_PROGRAMS = readfile
 
 readfile_SOURCES = \
   main.c

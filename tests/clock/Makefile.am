@@ -1,5 +1,7 @@
 
-sbin_PROGRAMS = clock
+testdir = $(prefix)/opt/tests
+
+test_PROGRAMS = clock
 
 clock_SOURCES = \
   main.c

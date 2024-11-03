@@ -1,5 +1,7 @@
 
-sbin_PROGRAMS = chartest
+testdir = $(prefix)/opt/tests
+ 
+test_PROGRAMS = chartest
 
 chartest_SOURCES = \
   main.c
