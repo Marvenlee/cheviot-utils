@@ -421,7 +421,7 @@ int cmdRenameMount (void) {
     return -1;
   }
   
-  sc = renamemsgport(new_path, old_path);
+  sc = renamemount(new_path, old_path);
   return sc;
 }
 
