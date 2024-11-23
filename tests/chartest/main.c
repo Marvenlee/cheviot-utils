@@ -14,6 +14,7 @@
 #include <sys/syslimits.h>
 #include <sys/wait.h>
 #include <sys/mount.h>
+#include <sys/mman.h>
 
 
 
@@ -47,8 +48,8 @@ int main(int argc, char **argv)
   
 	uint32_t *buffer_out, *buffer_in;
 	
-	buffer_out = virtualalloc((void *)0x40000000, 1024 * 4, PROT_READ | PROT_WRITE);
-	buffer_in = virtualalloc((void *)0x40080000, 1024 * 4, PROT_READ | PROT_WRITE);
+	buffer_out = mmap((void *)0x40000000, 1024 * 4, PROT_READ | PROT_WRITE, 0, -1, 0);
+	buffer_in = mmap((void *)0x40080000, 1024 * 4, PROT_READ | PROT_WRITE, 0, -1, 0);
 
 	if (buffer_out == NULL || buffer_in == NULL) {
 		printf("Failed to allocate buffers\n");

@@ -336,7 +336,7 @@ int cmdWaitfor (void) {
 
   struct timespec ts = {
     .tv_sec = 0,
-    .tv_nsec = 100000000,
+    .tv_nsec = 25000000,
   };
 
   fullpath = tokenize(NULL);
