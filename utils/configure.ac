@@ -12,7 +12,6 @@ AM_CONDITIONAL([BOARD_RASPBERRY_PI_4], [test "$BOARD" = "raspberrypi4"])
 
 AC_CONFIG_FILES([
   Makefile
-  init/Makefile
   say/Makefile
   setgpio/Makefile  
   top/Makefile

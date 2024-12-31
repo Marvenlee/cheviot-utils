@@ -100,7 +100,7 @@ am__installdirs = "$(DESTDIR)$(sbindir)"
 PROGRAMS = $(sbin_PROGRAMS)
 am_shutdown_OBJECTS = main.$(OBJEXT)
 shutdown_OBJECTS = $(am_shutdown_OBJECTS)
-shutdown_LDADD = $(LDADD)
+shutdown_DEPENDENCIES =
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -251,6 +251,7 @@ top_srcdir = @top_srcdir@
 shutdown_SOURCES = \
   main.c
 
+shutdown_LDADD = -lsysinit
 AM_CFLAGS = -O2 -std=c99 -g0
 all: all-am
 

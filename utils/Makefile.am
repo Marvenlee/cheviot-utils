@@ -19,5 +19,5 @@ else
 endif
 endif
 
-SUBDIRS = init say setgpio top shutdown
+SUBDIRS = say setgpio top shutdown
 

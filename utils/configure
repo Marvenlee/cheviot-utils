@@ -4384,7 +4384,7 @@ else
 fi
 
 
-ac_config_files="$ac_config_files Makefile init/Makefile say/Makefile setgpio/Makefile top/Makefile shutdown/Makefile"
+ac_config_files="$ac_config_files Makefile say/Makefile setgpio/Makefile top/Makefile shutdown/Makefile"
 
 
 cat >confcache <<\_ACEOF
@@ -5137,7 +5137,6 @@ do
   case $ac_config_target in
     "depfiles") CONFIG_COMMANDS="$CONFIG_COMMANDS depfiles" ;;
     "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile" ;;
-    "init/Makefile") CONFIG_FILES="$CONFIG_FILES init/Makefile" ;;
     "say/Makefile") CONFIG_FILES="$CONFIG_FILES say/Makefile" ;;
     "setgpio/Makefile") CONFIG_FILES="$CONFIG_FILES setgpio/Makefile" ;;
     "top/Makefile") CONFIG_FILES="$CONFIG_FILES top/Makefile" ;;

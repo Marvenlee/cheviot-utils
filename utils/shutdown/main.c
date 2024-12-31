@@ -13,6 +13,7 @@
 #include <errno.h>
 #include <time.h>
 #include <sys/time.h>
+#include <sys/sysinit.h>
 
 
 // Prototypes
@@ -24,10 +25,8 @@ void print_usage(void);
  * Usage: shutdown how
  *        how = reboot or poweroff
  *
- * TODO: 
- * Should only be done by root, and only a single instance.
- * Could run a shutdown script to terminate user processes and services.
- * Send signal to init/root task to terminate subprocesses.
+ * This sends a message to the sysinit service which handles the
+ * shutdown sequence.
  */
 int main (int argc, char *argv[])
 {
@@ -50,7 +49,7 @@ int main (int argc, char *argv[])
     exit(EXIT_FAILURE);
   }
     
-  cheviot_reboot(how);
+  sysinit_shutdown(how);
   return 0;  
 }
 
