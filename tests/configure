@@ -4384,7 +4384,7 @@ else
 fi
 
 
-ac_config_files="$ac_config_files Makefile chartest/Makefile clock/Makefile readfile/Makefile"
+ac_config_files="$ac_config_files Makefile chartest/Makefile clock/Makefile readfile/Makefile threadtest/Makefile"
 
 
 cat >confcache <<\_ACEOF
@@ -5140,6 +5140,7 @@ do
     "chartest/Makefile") CONFIG_FILES="$CONFIG_FILES chartest/Makefile" ;;
     "clock/Makefile") CONFIG_FILES="$CONFIG_FILES clock/Makefile" ;;
     "readfile/Makefile") CONFIG_FILES="$CONFIG_FILES readfile/Makefile" ;;
+    "threadtest/Makefile") CONFIG_FILES="$CONFIG_FILES threadtest/Makefile" ;;
 
   *) as_fn_error $? "invalid argument: \`$ac_config_target'" "$LINENO" 5;;
   esac
