@@ -15,6 +15,7 @@ AC_CONFIG_FILES([
   chartest/Makefile
   clock/Makefile
   readfile/Makefile  
+  readdir/Makefile
   threadtest/Makefile  
   ])
   

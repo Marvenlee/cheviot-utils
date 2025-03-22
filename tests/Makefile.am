@@ -19,4 +19,4 @@ else
 endif
 endif
 
-SUBDIRS = chartest clock readfile threadtest
+SUBDIRS = chartest clock readfile readdir threadtest
