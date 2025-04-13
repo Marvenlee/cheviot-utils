@@ -14,6 +14,8 @@ AC_CONFIG_FILES([
   src/logname/Makefile
   src/login/Makefile
   src/pwd_mkdb/Makefile
+  src/getty/Makefile
+  src/lgetty/Makefile
   ])
   
 AC_OUTPUT

@@ -31,8 +31,6 @@ void *test_routine(void *arg)
   log_info ("thread argument '%s'\n", arg);
   log_info("test thread %s: thread:%08x", arg, (uint32_t)pthread_self());
 
-  pthread_print(pthread_self());
-
   for (int t=0; t<10; t++) {  
     pthread_mutex_lock(&mutex);
 
@@ -58,10 +56,14 @@ int main (int argc, char *argv[])
   pthread_t thread2;
   char *ret;
   int sc;
+  uid_t u = 1;
+  gid_t g = 2;
+  
+  if (chown("hello", u, g) == 0) {
+  }
   
   log_info("pthreadtest starting");
   log_info("main thread: %08x", (uint32_t)pthread_self());
-  pthread_print(pthread_self());
 
   log_info("pthreadtest initializing mutex");  
   

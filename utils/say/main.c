@@ -52,7 +52,7 @@ int main (int argc, char *argv[])
   riov[0].addr = resp_buf;
   riov[0].size = sizeof resp_buf;
   
-  sc = sendmsg(fd, 0, 1, siov, 1, riov);
+  sc = sendio(fd, 0, 1, siov, 1, riov);
   
   close(fd);
 
